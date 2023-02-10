@@ -1,5 +1,6 @@
 package infrastructure;
 
+
 public class Location {
     private final int xCor;
     private final int yCor;
@@ -19,5 +20,14 @@ public class Location {
 
     public int getyCor() {
         return yCor;
+    }
+
+    /**
+     * checks if two locations are the same
+     * @param location the location to be tested
+     * @return true if they are the same, else false.
+     */
+    public boolean equals(Location location){
+        return this.xCor == location.getxCor() && this.yCor == location.getyCor();
     }
 }

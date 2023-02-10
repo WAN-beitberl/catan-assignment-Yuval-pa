@@ -7,6 +7,21 @@ public class Settlement extends Building {
         this.level = 0;
     }
 
+    /**
+     * test if two settlements are the same
+     * @param building a settlement type to test
+     * @return true if the two have the same values, else false.
+     */
+    @Override
+    public boolean equals(Building building) {
+        if (building.getClass() == Settlement.class)
+            if (this.pos.equals(building.pos))
+                if (this.level == ((Settlement) building).level)
+                    return this.playerColor.equals(building.playerColor);
+
+        return false;
+    }
+
     public int getLevel(){ return this.level;}
 
     // upgrade the settlement to a city if it is not one

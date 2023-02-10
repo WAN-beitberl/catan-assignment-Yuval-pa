@@ -19,4 +19,6 @@ public abstract class Building {
         loc[1]=this.pos.getyCor();
         return loc;
     }
+
+    public abstract boolean equals(Building building);
 }
