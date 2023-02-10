@@ -2,8 +2,8 @@ package main;
 
 
 public class Player {
-    private String name;
-    private String color;
+    private final String name;
+    private final String color;
     private int numOfWinPoints;
     public Player(String name, String color)
     {
