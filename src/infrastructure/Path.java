@@ -1,5 +1,7 @@
 package infrastructure;
 
+import java.util.Objects;
+
 public class Path extends Building {
     private final Location posTo;
 
@@ -21,16 +23,24 @@ public class Path extends Building {
 
     /**
      * checks if two paths are the same
-     * @param building a Path type to be compared.
+     * @param o a Path type to be compared.
      * @return return true if the two paths are the same, else false.
      */
     @Override
-    public boolean equals(Building building) {
-        if (building.getClass()== Path.class)
-            if (this.posTo.equals(((Path) building).posTo))
-                if (this.pos.equals(building.pos))
-                    return this.playerColor.equals(building.playerColor);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
-        return false;
+        Path path = (Path) o;
+
+        return posTo.equals(path.posTo);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (posTo != null ? posTo.hashCode() : 0);
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package infrastructure;
 
+ import java.util.Objects;
+
 public abstract class Building {
     protected Location pos;
     protected String playerColor;
@@ -20,5 +22,17 @@ public abstract class Building {
         return loc;
     }
 
-    public abstract boolean equals(Building building);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Building)) return false;
+        Building building = (Building) o;
+        return pos.equals(building.pos) && playerColor.equals(building.playerColor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pos, playerColor);
+    }
+
 }
