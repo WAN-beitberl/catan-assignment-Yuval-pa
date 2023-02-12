@@ -68,4 +68,72 @@ public class Player {
             this.numOfWinPoints++;
         }
     }
+
+    // todo add a method that checks if the player can place a settlement in a certain spot
+
+    public boolean addPath(Settlement goingFrom){
+        // Todo add an option to check if there is no path of another player
+
+        int[] location = new int[4];
+        if(this.settlements.contains(goingFrom)){
+            var temp = goingFrom.getLocation();
+            location[0] = temp[0];
+            location[1] = temp[1];
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("enter x location of where the path should go");
+            location[2] = scanner.nextInt();
+            System.out.println("enter y location of where the path should go");
+            location[3] = scanner.nextInt();
+
+            var path = new Path(location, this.color);
+            if(!this.paths.contains(path)){
+                this.paths.add(path);
+                return true;
+            }
+            else
+            {
+                System.out.println("error the path already exists");
+                return false;
+            }
+        }
+
+        System.out.println("you can only build a path from your settlement");
+        return false;
+    }
+
+    /**
+     * adds a new path of the user with no duplicities
+     * @param goingFrom a path must come
+     * @param xTo the x location of where the path should go
+     * @param yTo the y location of where the path should go
+     * @return true if the path was added successfully else false
+     */
+    public boolean addPath(Settlement goingFrom, int xTo, int yTo){
+        // Todo add an option to check if there is no path of another player
+        // todo add an option to make a path going from another path of the user
+        int[] location = new int[4];
+        if(this.settlements.contains(goingFrom)){
+            var temp = goingFrom.getLocation();
+            location[0] = temp[0];
+            location[1] = temp[1];
+            location[2] = xTo;
+            location[3] = yTo;
+
+            var path = new Path(location, this.color);
+            if(!this.paths.contains(path)){
+                this.paths.add(path);
+                return true;
+            }
+            else
+            {
+                System.out.println("error the path already exists");
+                return false;
+            }
+        }
+
+        System.out.println("you can only build a path from your settlement");
+        return false;
+    }
+
 }

@@ -10,7 +10,7 @@ class PathTest {
     void constructorCantHaveLessThen4ParametersInLocationArray() {
         int[] location = new int[]{1, 2, 3};
         assertThrows(Exception.class, () -> {
-            Path p = new Path(location, "test");
+            new Path(location, "test");
         });
 
     }
@@ -19,7 +19,7 @@ class PathTest {
     void constructorDoseNotThrowExceptionWithFourParameters() {
         int[] location = new int[]{1, 3, 2, 4};
         assertDoesNotThrow(() -> {
-            Path p = new Path(location, "test");
+            new Path(location, "test");
         });
 
     }
