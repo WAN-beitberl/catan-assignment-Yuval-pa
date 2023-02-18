@@ -5,24 +5,18 @@ package infrastructure;
  * A class used to represent the corners of the board
  */
 public class Corner extends Building {
-   private final int EMPTY = 0;
-   private final int BLOCKED = 1;
-   private final int SETTLEMENT = 2;
-   private final int CITY = 3;
+   public static final int EMPTY = 0;
+   public static final int BLOCKED = 1;
+   public static final int SETTLEMENT = 2;
+   public static final int CITY = 3;
 
     /**
      * the status of the corner
      */
     private int status;
-    public Corner(int xCor, int yCor, String color){
-        super(xCor, yCor, color);
-        this.status =EMPTY;
+    public Corner(Location location){
+        super(location);
     }
-    public Corner(int xCor, int yCor, String color, int playerId) {
-        super(xCor, yCor, color,playerId);
-        this.status = EMPTY;
-    }
-
     /**
      * test if two settlements are the same
      * @param o a settlement type to test
@@ -48,10 +42,23 @@ public class Corner extends Building {
 
     public int getStatus(){ return this.status;}
 
+    public boolean build(){
+        if(this.status != EMPTY)
+            return false;
+        this.status= SETTLEMENT;
+        return true;
+    }
+
+    public boolean setToBlock(){
+        if (this.status != EMPTY)
+            return false;
+        this.status = BLOCKED;
+        return true;
+    }
     // upgrade the settlement to a city if it is not one
     public void upgrade(){
-        if (this.status == 0){
-            this.status = 1;
+        if (this.status == SETTLEMENT){
+            this.status = CITY;
             System.out.println("Congrats the settlement is now a city");
         }
         else{
@@ -59,7 +66,7 @@ public class Corner extends Building {
         }
     }
 
-    /*public void produce(int type) {
+    public void produce(int type) {
 
-    }*/
+    }
 }

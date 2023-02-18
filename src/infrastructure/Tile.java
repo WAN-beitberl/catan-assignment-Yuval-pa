@@ -134,11 +134,11 @@ public class Tile {
         return true;
     }
 
-/*    *//**
+    /**
      * Check if this tile should produce resources or not, if so that's what it does
      * @param number The number of the tiles that needs to produce resources
      * @return true if the tile produced, else false
-     *//*
+     */
     public boolean produce(int number){
         if (number!=this.number)
             return false;
@@ -146,12 +146,12 @@ public class Tile {
         return true;
     }
 
-    *//**
+    /**
      * produces resources in all the corners of this tile
-     *//*
+     */
     private void produce(){
         for (Corner corner : this.corners){
            corner.produce(this.type);
         }
-    }*/
+    }
 }

@@ -24,7 +24,7 @@ class PathTest {
 
     @Test
     void equalsShouldReturnFalseIfItGetsNonPathObject(){
-        Corner s = new Corner(1,1,"test");
+        Corner s = new Corner(new Location(1,1));
         int[] location = new int[]{1,2,3, 4};
         Path p = new Path(location, "test");
         assertFalse(p.equals(s));
@@ -48,12 +48,13 @@ class PathTest {
         assertNotEquals(p, s);
     }
     @Test
-    void equalsShouldReturnFalseIfColorIsDifferent(){
+    void equalsShouldReturnFalseIfPlayerIdIsDifferent(){
         int[] locationPath = new int[]{1,2,3, 4};
         int[] locationToCompere = new int[]{1,2,3, 4};
 
         var s = new Path(locationToCompere,"test");
         var p = new Path(locationPath, "notTest");
+        p.playerId = 4;
         assertNotEquals(p, s);
     }
     @Test

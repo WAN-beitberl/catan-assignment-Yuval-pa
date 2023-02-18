@@ -13,9 +13,10 @@ public class Path extends Building {
      *                 [3]: the Y position of destination
      *                 </p>
      * @param color    the color of the player
+     * @// TODO: 18/02/2023 change the constructor to mache new building class
      */
     public Path(int[] location, String color) {
-        super(location[0], location[1], color);
+        super(new Location(location[0],location[1]));
         this.posTo = new Location(location[2], location[3]);
     }
 

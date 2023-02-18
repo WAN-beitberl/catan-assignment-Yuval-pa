@@ -76,7 +76,7 @@ class TileTest {
     @Test
     void cadAddSettlementsSuccessfully(){
         Tile t1;
-        Corner corner = new Corner(0,0,"test");
+        Corner corner = new Corner(new Location(0,0));
         Location loc1 = new Location(0,0);
         try {
             t1 = new Tile(loc1);

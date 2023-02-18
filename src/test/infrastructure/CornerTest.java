@@ -7,47 +7,88 @@ import static org.junit.jupiter.api.Assertions.*;
 class CornerTest {
 
     @Test
-    void upgradeToCity() {
-        Corner s = new Corner(0,0,"test");
+    void CantUpgradeFromEmpty() {
+        Corner s = new Corner(new Location(0,0));
         s.upgrade();
-        assertEquals(1, s.getStatus());
+        assertNotEquals(Corner.CITY, s.getStatus());
+    }
+    @Test
+    void upgradeToCity() {
+        Corner s = new Corner(new Location(0,0));
+        s.build();
+        s.upgrade();
+        assertEquals(Corner.CITY, s.getStatus());
     }
     @Test
     void upgradeFromCity(){
-        Corner s = new Corner(0,0,"test");
+        Corner s = new Corner(new Location(0,0));
+        s.build();
         s.upgrade();
         s.upgrade();
-        assertEquals(1, s.getStatus());
+        assertEquals(Corner.CITY, s.getStatus());
     }
 
     @Test
     void equalsShouldReturnFalseIfItGetsNonSettlementObject(){
-        Corner s = new Corner(1,1,"test");
+        var loc1 = new Location(1,1);
+        Corner s = new Corner(loc1);
         int[] location = new int[]{1,2,3, 4};
         Path p = new Path(location, "test");
         assertFalse(s.equals(p));
     }
     @Test
     void equalsShouldReturnFalseIfPosIsDifferent(){
-        var s = new Corner(7,2,"test");
-        var p = new Corner(7,3, "test");
+        var s = new Corner(new Location(7,2));
+        var p = new Corner(new Location(7,3));
         assertNotEquals(s, p);
     }
     @Test
-    void equalsShouldReturnFalseIfColorIsDifferent(){
-        var s = new Corner(7,3,"test");
-        var p = new Corner(7,3, "notTest");
+    void equalsShouldReturnFalseIfPlayerIdIsDifferent(){
+        var s = new Corner(new Location(7,3));
+        var p = new Corner(new Location(7,3));
+        p.playerId = 4;
         assertNotEquals(s, p);
     }
     @Test
     void equalsShouldReturnTrueIfSettlementsAreTheSame(){
-        var s = new Corner(7,3,"test");
-        var p = new Corner(7,3, "test");
+        var s = new Corner(new Location(7,3));
+        var p = new Corner(new Location(7,3));
         assertEquals(s, p);
     }
     @Test
     void equalsShouldBeTrueWithItself(){
-        var s = new Corner(1,1,"test");
+        var s = new Corner(new Location(7,3));
         assertEquals(s, s);
+    }
+
+    @Test
+    void setToBlockFromEmptyShouldRerunTrue() {
+        var s = new Corner(new Location(1,1));
+        assertTrue(s.setToBlock());
+    }
+    @Test
+    void setToBlockNotFromEmptyShouldRerunFalse() {
+        var s = new Corner(new Location(1,1));
+        s.setToBlock();
+        assertFalse(s.setToBlock());
+    }
+
+    @Test
+    void buildFromEmptyShouldReturnTrue(){
+        var c = new Corner(new Location(1,1));
+        assertTrue(c.build());
+    }
+
+    @Test
+    void buildNotFromEmptyShouldReturnFalse(){
+        var loc = new Location(1,1);
+        var block = new Corner(loc);
+        var settle = new Corner(loc);
+
+        block.setToBlock();
+        settle.build();
+
+        assertFalse(block.build());
+        assertFalse(settle.build());
     }
 }
