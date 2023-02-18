@@ -1,6 +1,8 @@
 package infrastructure;
 
 
+import main.PlayerManager;
+
 /**
  * A class used to represent the corners of the board
  */
@@ -67,6 +69,7 @@ public class Corner extends Building {
     }
 
     public void produce(int type) {
-
+        if (this.status == SETTLEMENT ||this.status == CITY)
+            PlayerManager.getInstance(this.playerId).produce(type,status);
     }
 }

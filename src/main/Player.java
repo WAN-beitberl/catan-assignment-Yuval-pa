@@ -9,29 +9,39 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
+    private static final int  DESERT= 0;
+    private static final int  WOOD= 1;
+    private static final int  WOOL= 2;
+    private static final int  STONE= 3;
+    private static final int  CLAY= 4;
+    private static final int  WHEAT= 5;
+
     private String name;
     private String color;
     private int playerId;
     private int numOfWinPoints;
+    private int [] resources;
     private ArrayList<Corner> settlements;
     private ArrayList<Path> paths;
 
     public Player(int playerId){
+        this.playerId = playerId;
         inputNameAndColor();
         this.numOfWinPoints = 0;
-        this.playerId = playerId;
         this.settlements = new ArrayList<>();
         this.paths = new ArrayList<>();
+        this.resources = new int[6];
     }
 
     private void inputNameAndColor() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("please enter your name");
+        System.out.println("player: "+ this.playerId+" please enter your name");
         this.name=scanner.next();
-        System.out.println("please enter your color");
+        System.out.println("Hi"+this.name+" please enter your color");
         this.color = scanner.next();
     }
 
+    // todo delete this constructor
     public Player(String name, String color)
     {
         this.name = name;
@@ -53,6 +63,17 @@ public class Player {
 
     public int getNumOfWinPoints() {
         return numOfWinPoints;
+    }
+
+    public void produce(int type, int status){
+        if(type == DESERT)
+            return;
+        int amountToAdd;
+        if (status == Corner.SETTLEMENT)
+            amountToAdd = 1;
+        else
+            amountToAdd = 2;
+        this.resources[status] +=amountToAdd;
     }
 
     /**
