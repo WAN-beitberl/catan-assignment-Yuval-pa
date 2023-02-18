@@ -1,7 +1,5 @@
 package infrastructure;
 
-import java.util.Objects;
-
 public class Path extends Building {
     private final Location posTo;
 

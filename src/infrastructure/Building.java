@@ -17,8 +17,8 @@ public abstract class Building {
      */
     public int[] getLocation(){
         int []loc = new int[2];
-        loc[0]=this.pos.getxCor();
-        loc[1]=this.pos.getyCor();
+        loc[0]=this.pos.get_xCor();
+        loc[1]=this.pos.get_yCor();
         return loc;
     }
 

@@ -1,7 +1,5 @@
 package infrastructure;
 
-import java.util.Objects;
-
 public class Settlement extends Building {
     private int level; // level 0 - settlement/ level 1 - city
     public Settlement(int xCor, int yCor, String color) {

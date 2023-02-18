@@ -14,11 +14,11 @@ public class Location {
         this.xCor= xCor;
         this.yCor=yCor;
     }
-    public int getxCor() {
+    public int get_xCor() {
         return xCor;
     }
 
-    public int getyCor() {
+    public int get_yCor() {
         return yCor;
     }
 
@@ -28,6 +28,6 @@ public class Location {
      * @return true if they are the same, else false.
      */
     public boolean equals(Location location){
-        return this.xCor == location.getxCor() && this.yCor == location.getyCor();
+        return this.xCor == location.get_xCor() && this.yCor == location.get_yCor();
     }
 }

@@ -9,9 +9,7 @@ class PathTest {
     @Test
     void constructorCantHaveLessThen4ParametersInLocationArray() {
         int[] location = new int[]{1, 2, 3};
-        assertThrows(Exception.class, () -> {
-            new Path(location, "test");
-        });
+        assertThrows(Exception.class, () -> new Path(location, "test"));
 
     }
 
@@ -38,7 +36,7 @@ class PathTest {
 
         var s = new Path(locationToCompere,"test");
         var p = new Path(locationPath, "test");
-        assertFalse(p.equals(s));
+        assertNotEquals(p, s);
     }
     @Test
     void equalsShouldReturnFalseIfPosIsDifferent(){
@@ -56,7 +54,7 @@ class PathTest {
 
         var s = new Path(locationToCompere,"test");
         var p = new Path(locationPath, "notTest");
-        assertFalse(p.equals(s));
+        assertNotEquals(p, s);
     }
     @Test
     void equalsShouldReturnTrueIfPathsAreTheSame(){
@@ -65,6 +63,6 @@ class PathTest {
 
         var s = new Path(locationToCompere,"test");
         var p = new Path(locationPath, "test");
-        assertTrue(p.equals(s));
+        assertEquals(p, s);
     }
 }
