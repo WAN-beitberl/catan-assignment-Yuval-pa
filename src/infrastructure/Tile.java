@@ -48,7 +48,7 @@ public class Tile {
      *     <li>5 - Wheat</li></ul>
      */
     private int type;
-    private final Settlement[] settlements;
+    private final Corner[] corners;
     private final Location baseLocation;
     private int numberOfSettlements;
     private final int MAX_NUM_OF_SETTLEMENTS =6;
@@ -67,7 +67,7 @@ public class Tile {
         this.type = -1;
         this.number = 0;
         this.numberOfSettlements =0;
-        this.settlements = new Settlement[6];
+        this.corners = new Corner[6];
     }
 
     private void addToHashMap(Location baseLocation) throws IOException{
@@ -90,8 +90,8 @@ public class Tile {
         setNumber(number);
     }
 
-    public Settlement[] getSettlements(){
-        return this.settlements;
+    public Corner[] getSettlements(){
+        return this.corners;
     }
 
     public int getNumber(){
@@ -103,14 +103,14 @@ public class Tile {
     }
 
     /**
-     * add a new settlement to the array of this tile, is called by todo: add link to method in Settlement
-     * @param settlement a reference to the settlement to add
-     * @return true if the settlement was added successfully else false.
+     * add a new corner to the array of this tile, is called by todo: add link to method in Corner
+     * @param corner a reference to the corner to add
+     * @return true if the corner was added successfully else false.
      */
-    public boolean addSettlement(Settlement settlement){
+    public boolean addSettlement(Corner corner){
         if (this.numberOfSettlements >= this.MAX_NUM_OF_SETTLEMENTS)
             return false;
-        this.settlements[this.numberOfSettlements] = settlement;
+        this.corners[this.numberOfSettlements] = corner;
         this.numberOfSettlements++;
         return true;
     }
@@ -134,9 +134,24 @@ public class Tile {
         return true;
     }
 
-    /*public void produce(){
-        for (Settlement settlement: this.settlements){
-            settlement.produce(this.type);
+/*    *//**
+     * Check if this tile should produce resources or not, if so that's what it does
+     * @param number The number of the tiles that needs to produce resources
+     * @return true if the tile produced, else false
+     *//*
+    public boolean produce(int number){
+        if (number!=this.number)
+            return false;
+        produce();
+        return true;
+    }
+
+    *//**
+     * produces resources in all the corners of this tile
+     *//*
+    private void produce(){
+        for (Corner corner : this.corners){
+           corner.produce(this.type);
         }
     }*/
 }

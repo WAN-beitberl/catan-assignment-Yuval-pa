@@ -24,7 +24,7 @@ class PathTest {
 
     @Test
     void equalsShouldReturnFalseIfItGetsNonPathObject(){
-        Settlement s = new Settlement(1,1,"test");
+        Corner s = new Corner(1,1,"test");
         int[] location = new int[]{1,2,3, 4};
         Path p = new Path(location, "test");
         assertFalse(p.equals(s));
@@ -45,7 +45,7 @@ class PathTest {
 
         var s = new Path(locationToCompere,"test");
         var p = new Path(locationPath, "test");
-        assertFalse(p.equals(s));
+        assertNotEquals(p, s);
     }
     @Test
     void equalsShouldReturnFalseIfColorIsDifferent(){

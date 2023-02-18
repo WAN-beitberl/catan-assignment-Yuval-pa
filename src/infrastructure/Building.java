@@ -3,13 +3,22 @@ package infrastructure;
  import java.util.Objects;
 
 public abstract class Building {
-    protected Location pos;
-    protected String playerColor;
+    protected Location pos; // todo: delete after merge
+    protected String playerColor;// todo: delete after merge
+    protected int playerId;
+    protected boolean isVisible;
 
     //TODO: make it possible to make a building with no Location data and add it later
     public Building(int xCor, int yCor, String color){
         this.pos = new Location(xCor, yCor);
         this.playerColor=color;
+        this.isVisible = false;
+        this.playerId = 0;
+    }
+    // todo: delete after merge, keep to not write all tests from zero
+    public Building(int xCor, int yCor, String playerColor, int playerId){
+        this(xCor, yCor,playerColor);
+        this.playerId= playerId;
     }
 
     /**

@@ -76,17 +76,17 @@ class TileTest {
     @Test
     void cadAddSettlementsSuccessfully(){
         Tile t1;
-        Settlement settlement = new Settlement(0,0,"test");
+        Corner corner = new Corner(0,0,"test");
         Location loc1 = new Location(0,0);
         try {
             t1 = new Tile(loc1);
-            assertTrue(t1.addSettlement(settlement), "one");
-            assertTrue(t1.addSettlement(settlement), "two");
-            assertTrue(t1.addSettlement(settlement), "three");
-            assertTrue(t1.addSettlement(settlement), "four");
-            assertTrue(t1.addSettlement(settlement),"five");
-            assertTrue(t1.addSettlement(settlement),"six");
-            assertFalse(t1.addSettlement(settlement),"seven");
+            assertTrue(t1.addSettlement(corner), "one");
+            assertTrue(t1.addSettlement(corner), "two");
+            assertTrue(t1.addSettlement(corner), "three");
+            assertTrue(t1.addSettlement(corner), "four");
+            assertTrue(t1.addSettlement(corner),"five");
+            assertTrue(t1.addSettlement(corner),"six");
+            assertFalse(t1.addSettlement(corner),"seven");
         }
         catch (Exception e){
             System.err.println("error creating tile");

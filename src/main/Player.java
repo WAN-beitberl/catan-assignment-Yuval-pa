@@ -2,7 +2,7 @@ package main;
 
 
 import infrastructure.Path;
-import infrastructure.Settlement;
+import infrastructure.Corner;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,7 +11,7 @@ public class Player {
     private final String name;
     private final String color;
     private int numOfWinPoints;
-    private ArrayList<Settlement> settlements;
+    private ArrayList<Corner> corners;
     private ArrayList<Path> paths;
 
     public Player(String name, String color)
@@ -19,14 +19,14 @@ public class Player {
         this.name = name;
         this.color =color;
         this.numOfWinPoints = 0;
-        this.settlements =new ArrayList<>();
+        this.corners =new ArrayList<>();
         this.paths = new ArrayList<>();
     }
     public String getName(){ return this.name;}
     public String getColor(){return this.color;}
 
-    public ArrayList<Settlement> getSettlements() {
-        return settlements;
+    public ArrayList<Corner> getSettlements() {
+        return corners;
     }
 
     public ArrayList<Path> getPaths() {
@@ -48,10 +48,10 @@ public class Player {
         xCor = scanner.nextInt();
         System.out.println("Enter Y location");
         yCor = scanner.nextInt();
-        Settlement settlement = new Settlement(xCor,yCor, this.color);
+        Corner corner = new Corner(xCor,yCor, this.color);
 
-       if (!this.settlements.contains(settlement)){
-            this.settlements.add(settlement);
+       if (!this.corners.contains(corner)){
+            this.corners.add(corner);
             this.numOfWinPoints++;
         }
     }
@@ -62,20 +62,20 @@ public class Player {
      * @param yCor the Y-axis of the settlement
      */
     public void addSettlement(int xCor, int yCor){
-        Settlement settlement = new Settlement(xCor,yCor, this.color);
-        if (!this.settlements.contains(settlement)){
-            this.settlements.add(new Settlement(xCor,yCor,this.color));
+        Corner corner = new Corner(xCor,yCor, this.color);
+        if (!this.corners.contains(corner)){
+            this.corners.add(new Corner(xCor,yCor,this.color));
             this.numOfWinPoints++;
         }
     }
 
     // todo add a method that checks if the player can place a settlement in a certain spot
 
-    public boolean addPath(Settlement goingFrom){
+    public boolean addPath(Corner goingFrom){
         // Todo add an option to check if there is no path of another player
 
         int[] location = new int[4];
-        if(this.settlements.contains(goingFrom)){
+        if(this.corners.contains(goingFrom)){
             var temp = goingFrom.getLocation();
             location[0] = temp[0];
             location[1] = temp[1];
@@ -109,11 +109,11 @@ public class Player {
      * @param yTo the y location of where the path should go
      * @return true if the path was added successfully else false
      */
-    public boolean addPath(Settlement goingFrom, int xTo, int yTo){
+    public boolean addPath(Corner goingFrom, int xTo, int yTo){
         // Todo add an option to check if there is no path of another player
         // todo add an option to make a path going from another path of the user
         int[] location = new int[4];
-        if(this.settlements.contains(goingFrom)){
+        if(this.corners.contains(goingFrom)){
             var temp = goingFrom.getLocation();
             location[0] = temp[0];
             location[1] = temp[1];

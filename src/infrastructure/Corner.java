@@ -1,10 +1,26 @@
 package infrastructure;
 
-public class Settlement extends Building {
-    private int level; // level 0 - settlement/ level 1 - city
-    public Settlement(int xCor, int yCor, String color) {
+
+/**
+ * A class used to represent the corners of the board
+ */
+public class Corner extends Building {
+   private final int EMPTY = 0;
+   private final int BLOCKED = 1;
+   private final int SETTLEMENT = 2;
+   private final int CITY = 3;
+
+    /**
+     * the status of the corner
+     */
+    private int status;
+    public Corner(int xCor, int yCor, String color){
         super(xCor, yCor, color);
-        this.level = 0;
+        this.status =EMPTY;
+    }
+    public Corner(int xCor, int yCor, String color, int playerId) {
+        super(xCor, yCor, color,playerId);
+        this.status = EMPTY;
     }
 
     /**
@@ -18,28 +34,32 @@ public class Settlement extends Building {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Settlement that = (Settlement) o;
+        Corner that = (Corner) o;
 
-        return level == that.level;
+        return status == that.status;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + level;
+        result = 31 * result + status;
         return result;
     }
 
-    public int getLevel(){ return this.level;}
+    public int getStatus(){ return this.status;}
 
     // upgrade the settlement to a city if it is not one
     public void upgrade(){
-        if (this.level == 0){
-            this.level = 1;
+        if (this.status == 0){
+            this.status = 1;
             System.out.println("Congrats the settlement is now a city");
         }
         else{
             System.out.println("You can not upgrade a city");
         }
     }
+
+    /*public void produce(int type) {
+
+    }*/
 }

@@ -4,50 +4,50 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SettlementTest {
+class CornerTest {
 
     @Test
     void upgradeToCity() {
-        Settlement s = new Settlement(0,0,"test");
+        Corner s = new Corner(0,0,"test");
         s.upgrade();
-        assertEquals(1, s.getLevel());
+        assertEquals(1, s.getStatus());
     }
     @Test
     void upgradeFromCity(){
-        Settlement s = new Settlement(0,0,"test");
+        Corner s = new Corner(0,0,"test");
         s.upgrade();
         s.upgrade();
-        assertEquals(1, s.getLevel());
+        assertEquals(1, s.getStatus());
     }
 
     @Test
     void equalsShouldReturnFalseIfItGetsNonSettlementObject(){
-        Settlement s = new Settlement(1,1,"test");
+        Corner s = new Corner(1,1,"test");
         int[] location = new int[]{1,2,3, 4};
         Path p = new Path(location, "test");
         assertFalse(s.equals(p));
     }
     @Test
     void equalsShouldReturnFalseIfPosIsDifferent(){
-        var s = new Settlement(7,2,"test");
-        var p = new Settlement(7,3, "test");
-        assertFalse(s.equals(p));
+        var s = new Corner(7,2,"test");
+        var p = new Corner(7,3, "test");
+        assertNotEquals(s, p);
     }
     @Test
     void equalsShouldReturnFalseIfColorIsDifferent(){
-        var s = new Settlement(7,3,"test");
-        var p = new Settlement(7,3, "notTest");
-        assertFalse(s.equals(p));
+        var s = new Corner(7,3,"test");
+        var p = new Corner(7,3, "notTest");
+        assertNotEquals(s, p);
     }
     @Test
     void equalsShouldReturnTrueIfSettlementsAreTheSame(){
-        var s = new Settlement(7,3,"test");
-        var p = new Settlement(7,3, "test");
-        assertTrue(s.equals(p));
+        var s = new Corner(7,3,"test");
+        var p = new Corner(7,3, "test");
+        assertEquals(s, p);
     }
     @Test
     void equalsShouldBeTrueWithItself(){
-        var s = new Settlement(1,1,"test");
-        assertTrue(s.equals(s));
+        var s = new Corner(1,1,"test");
+        assertEquals(s, s);
     }
 }
