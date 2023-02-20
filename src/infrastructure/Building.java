@@ -5,23 +5,12 @@ package infrastructure;
 public abstract class Building {
     protected Location location;
     protected int playerId;
-    protected boolean isVisible;
 
-    private Building(){
+    public Building(){
         this.playerId = 0;
-        this.isVisible = false;
-    }
-    public Building(Location location) {
-        this();
-        this.location = location;
     }
 
-    /**
-     * @return The location of the building
-     */
-    public Location getLocation(){
-        return this.location;
-    }
+    public int getPlayerId(){return  this.playerId;}
 
     @Override
     public boolean equals(Object o) {
@@ -31,7 +20,6 @@ public abstract class Building {
         Building building = (Building) o;
 
         if (playerId != building.playerId) return false;
-        if (isVisible != building.isVisible) return false;
         return location.equals(building.location);
     }
 

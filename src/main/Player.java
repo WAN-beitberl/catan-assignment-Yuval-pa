@@ -1,6 +1,7 @@
 package main;
 
 
+import infrastructure.CornerManager;
 import infrastructure.Location;
 import infrastructure.Path;
 import infrastructure.Corner;
@@ -9,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
-    private static final int  DESERT= 0;
-    private static final int  WOOD= 1;
-    private static final int  WOOL= 2;
-    private static final int  STONE= 3;
-    private static final int  CLAY= 4;
-    private static final int  WHEAT= 5;
+    public static final int  DESERT= 0;
+    public static final int  WOOD= 1;
+    public static final int  WOOL= 2;
+    public static final int  STONE= 3;
+    public static final int  CLAY= 4;
+    public static final int  WHEAT= 5;
 
     private String name;
     private String color;
@@ -50,21 +51,42 @@ public class Player {
         this.settlements =new ArrayList<>();
         this.paths = new ArrayList<>();
     }
+
     public String getName(){ return this.name;}
     public String getColor(){return this.color;}
-
-    public ArrayList<Corner> getSettlements() {
-        return settlements;
-    }
-
+    public ArrayList<Corner> getSettlements() {return settlements;}
     public ArrayList<Path> getPaths() {
         return paths;
     }
+    public int getNumOfWinPoints() {return numOfWinPoints;}
+    public int getPlayerId(){return this.playerId;}
+    public int[] getResources(){return this.resources;}
+    public int getResource(int type){return this.resources[type];}
 
-    public int getNumOfWinPoints() {
-        return numOfWinPoints;
+    // todo finish the function
+    public boolean build(String building, Location location){
+        if (!canBuild(building) || !CornerManager.checkIfLocationIsLegal(location))
+            return false;
+        var corner = CornerManager.getInstance(location);
+
+        switch (building.toLowerCase())
+        {
+            case("settlement"):
+            {
+                if (corner.isEmpty() || (corner.isBlocked() && this.playerId == corner.getPlayerId())){
+                    corner.build(this.playerId);
+                }
+            }
+        }
     }
 
+    /**
+     * get resources from settlements beside producing tiles.
+     * @param type the type of resource to add to the player
+     * @param status the type of the settlements.
+     * @see Corner#produce(int)
+     * @see infrastructure.Tile#produce(int)
+     */
     public void produce(int type, int status){
         if(type == DESERT)
             return;
@@ -74,6 +96,24 @@ public class Player {
         else
             amountToAdd = 2;
         this.resources[status] +=amountToAdd;
+    }
+
+    /**
+     * Checks if the player can build a given building type
+     * @param buildingType the name of the building type to check
+     * @return true if the player has enough resources to build the building, else false
+     */
+    public boolean canBuild(String buildingType){
+        if (buildingType.equalsIgnoreCase("settlement")) {
+            return (getResource(CLAY) >= 1 && getResource(WOOD) >= 1 && getResource(WOOL) >= 1 && getResource(WHEAT) >= 1);
+        }
+        else if(buildingType.equalsIgnoreCase("city")){
+            return (getResource(STONE) >=3 && getResource(WHEAT) >=2);
+        }
+        else if (buildingType.equalsIgnoreCase("path")){
+            return (getResource(CLAY) >=1 && getResource(WOOD) >=1);
+        }
+        return false;
     }
 
     /**

@@ -12,13 +12,16 @@ public class Corner extends Building {
    public static final int SETTLEMENT = 2;
    public static final int CITY = 3;
 
-    /**
-     * the status of the corner
-     */
     private int status;
+    private Location location;
+
     public Corner(Location location){
-        super(location);
+        super();
+        this.status = EMPTY;
+        this.location = location;
+        // todo add all the tiles of this location
     }
+
     /**
      * test if two settlements are the same
      * @param o a settlement type to test
@@ -42,22 +45,37 @@ public class Corner extends Building {
         return result;
     }
 
-    public int getStatus(){ return this.status;}
+    public boolean isEmpty(){return (this.status == EMPTY);}
+    public boolean isBlocked(){return (this.status == BLOCKED);}
+    public boolean isSettlement(){return (this.status == SETTLEMENT);}
+    public boolean isCity(){return (this.status == CITY);}
+    public Location getLocation(){return this.location;}
 
-    public boolean build(){
-        if(this.status != EMPTY)
-            return false;
+    /**
+     * build a settlement in this corner, if it's empty and not blocked
+     * @param playerId the id of the player how build the settlement
+     * @return true if the build was successful else false
+     */
+    public boolean build(int playerId){
         this.status= SETTLEMENT;
+        this.playerId = playerId;
         return true;
     }
 
+    /**
+     * declarer this corner as blocked
+     * @return true if the operation was successful else false
+     */
     public boolean setToBlock(){
         if (this.status != EMPTY)
             return false;
         this.status = BLOCKED;
         return true;
     }
-    // upgrade the settlement to a city if it is not one
+
+    /**
+     * upgrade the settlement to a city if it is not one already
+     */
     public void upgrade(){
         if (this.status == SETTLEMENT){
             this.status = CITY;

@@ -10,22 +10,22 @@ class CornerTest {
     void CantUpgradeFromEmpty() {
         Corner s = new Corner(new Location(0,0));
         s.upgrade();
-        assertNotEquals(Corner.CITY, s.getStatus());
+        assertNotEquals(Corner.CITY, s.isCity());
     }
     @Test
     void upgradeToCity() {
         Corner s = new Corner(new Location(0,0));
-        s.build();
+        s.build(1);
         s.upgrade();
-        assertEquals(Corner.CITY, s.getStatus());
+        assertEquals(Corner.CITY, s.isCity());
     }
     @Test
     void upgradeFromCity(){
         Corner s = new Corner(new Location(0,0));
-        s.build();
+        s.build(1);
         s.upgrade();
         s.upgrade();
-        assertEquals(Corner.CITY, s.getStatus());
+        assertEquals(Corner.CITY, s.isCity());
     }
 
     @Test
@@ -76,7 +76,7 @@ class CornerTest {
     @Test
     void buildFromEmptyShouldReturnTrue(){
         var c = new Corner(new Location(1,1));
-        assertTrue(c.build());
+        assertTrue(c.build(1));
     }
 
     @Test
@@ -86,9 +86,9 @@ class CornerTest {
         var settle = new Corner(loc);
 
         block.setToBlock();
-        settle.build();
+        settle.build(1);
 
-        assertFalse(block.build());
-        assertFalse(settle.build());
+        assertFalse(block.build(1));
+        assertFalse(settle.build(1));
     }
 }
