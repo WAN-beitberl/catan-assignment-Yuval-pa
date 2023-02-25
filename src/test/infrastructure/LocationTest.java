@@ -12,8 +12,8 @@ class LocationTest {
         Location location2 = new Location(1,2);
         Location location3 = new Location(5,4);
 
-        assertTrue(location1.equals(location2));
-        assertFalse(location1.equals(location3));
-        assertTrue(location1.equals(location1));
+        assertEquals(location1, location2);
+        assertNotEquals(location1, location3);
+        assertEquals(location1, location1);
     }
 }

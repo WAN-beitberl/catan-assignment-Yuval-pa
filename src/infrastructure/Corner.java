@@ -12,11 +12,11 @@ public class Corner {
 
 
     private BuildingType status;
-    private Location location;
+    private final Location location;
     private int playerId;
-    private Path[] edges;
+    private final Path[] edges;
     private int numOfEdges;
-    private Tile[] tiles;
+    private final Tile[] tiles;
     private int numOfTiles;
 
     public Corner(Location location){
@@ -27,13 +27,25 @@ public class Corner {
         numOfEdges =0;
         edges = new Path[3];
         tiles = new Tile[3];
-        // todo add all the tiles of this location
+        addTiles();
     }
 
     public BuildingType getStatus(){return status;}
     public Location getLocation(){return this.location;}
     public int getPlayerID(){return this.playerId;}
     public Path[] getEdges(){return this.edges;}
+
+    public int getNumOfEdges() {
+        return numOfEdges;
+    }
+
+    public int getNumOfTiles() {
+        return numOfTiles;
+    }
+
+    public Tile[] getTiles() {
+        return tiles;
+    }
 
     /**
      * build a settlement in this corner, if it's empty and not blocked
@@ -49,8 +61,26 @@ public class Corner {
         return true;
     }
 
+    public void produce(int type) {
+        if (this.status == SETTLEMENT ||this.status == CITY)
+            PlayerManager.getInstance(this.playerId).produce(type,status);
+    }
+
+    /**
+     * adds all the tiles that are next to the corner to the tile array of the corner
+     */
     private void addTiles(){
-        // todo write this function
+        // the base location of the tile is in the upper rows of the board
+        if (this.location.get_xCor() <6)
+            findTilesIfCornerIsInUpperPartOfTheBoard();
+        else
+            findTilesForCornerInLowerPartOfTheBoard();
+    }
+
+    public boolean upgrade(int playerID){
+        if(this.status != SETTLEMENT || this.playerId != playerID) return false;
+        this.status = CITY;
+        return true;
     }
 
     public boolean addEdge(Path edge){
@@ -63,13 +93,65 @@ public class Corner {
         return false;
     }
 
-    private void addTile(Tile tile){
-        this.tiles[this.numOfTiles] = tile;
-        numOfTiles++;
-        tile.addSettlement(this);
+    private void findTilesIfCornerIsInUpperPartOfTheBoard(){
+        var xLoc = this.location.get_xCor();
+        var yLoc = this.location.get_yCor();
+
+        if (xLoc%2!=0){
+            // lower tile
+            if (xLoc==5){
+                addTileToArray(new Location(xLoc+3, yLoc));
+            }
+            else
+                addTileToArray(new Location(xLoc +3, yLoc+1));
+
+            //right
+            addTileToArray(new Location(xLoc+1, yLoc+1));
+            // left
+            addTileToArray(new Location(xLoc+1,yLoc));
+        }
+
+        else{
+            // upper tile
+            addTileToArray(new Location(xLoc,yLoc));
+            //left tile
+            addTileToArray(new Location(xLoc +2, yLoc -1));
+            //right tile
+            addTileToArray(new Location(xLoc +2, yLoc));
+        }
+    }
+    private void findTilesForCornerInLowerPartOfTheBoard(){
+        var xLoc = this.location.get_xCor();
+        var yLoc = this.location.get_yCor();
+
+        if (xLoc%2!=0){
+            //lower tile
+            addTileToArray(new Location(xLoc+3, yLoc -1));
+            //left
+            addTileToArray(new Location(xLoc +1,yLoc -1));
+            //right
+            addTileToArray(new Location(xLoc +1, yLoc));
+        }
+        else{
+            //upper tile
+            addTileToArray(new Location(xLoc,yLoc));
+            //left
+            addTileToArray(new Location(xLoc+2,yLoc-1));
+            //right
+            addTileToArray(new Location(xLoc + 2,yLoc));
+        }
     }
 
-   // todo write test
+    private void addTileToArray(Location location){
+        if (CornerManager.checkIfLocationIsLegal(location) && TileManager.checkIfTileExist(location)) {
+            var tile = TileManager.getInstance(location);
+            this.tiles[this.numOfTiles] = tile;
+            numOfTiles++;
+            tile.addSettlement(this);
+        }
+    }
+
+    // todo write test
     private void setToBlock(){
         if (status!=BuildingType.EMPTY && numOfEdges<2)
             return;
@@ -78,43 +160,24 @@ public class Corner {
         }
         else if (numOfEdges == 3){
             if(edges[0].getPlayerId() == edges[2].getPlayerId() ||
-            edges[1].getPlayerId() == edges[2].getPlayerId()){
+                    edges[1].getPlayerId() == edges[2].getPlayerId()){
                 this.status = BLOCKED;
             }
         }
     }
 
-    public boolean upgrade(int playerID){
-        if(this.status != SETTLEMENT || this.playerId != playerID) return false;
-        this.status = CITY;
-        return true;
-    }
-
-    public void produce(int type) {
-        if (this.status == SETTLEMENT ||this.status == CITY)
-            PlayerManager.getInstance(this.playerId).produce(type,status);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + status.hashCode();
-        return result;
-    }
-
-    /**
-     * test if two settlements are the same
-     * @param o a settlement type to test
-     * @return true if the two have the same values, else false.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        //if (!super.equals(o)) return false;
 
-        Corner that = (Corner) o;
+        Corner corner = (Corner) o;
 
-        return (this.location.equals(that.location));
+        return location.equals(corner.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return location.hashCode();
     }
 }

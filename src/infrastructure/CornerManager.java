@@ -3,7 +3,7 @@ package infrastructure;
 import java.util.HashMap;
 // todo write tests for this class
 public class CornerManager {
-    private static HashMap<Integer, Integer> boardLimits;
+    private static final HashMap<Integer, Integer> boardLimits;
     static{
         boardLimits = new HashMap<>();
         boardLimits.put(1,3);
@@ -19,7 +19,7 @@ public class CornerManager {
         boardLimits.put(11,4);
         boardLimits.put(12,3);
     }
-    private static HashMap<Location, Corner> cornerHashMap = new HashMap<>();
+    private static final HashMap<Location, Corner> cornerHashMap = new HashMap<>();
     private static boolean wasCreated = false;
 
     /**
@@ -32,7 +32,7 @@ public class CornerManager {
 
         wasCreated = true;
         // create a corner in every possible location
-        for(int numOfRow =0;numOfRow< boardLimits.size(); numOfRow++){
+        for(int numOfRow =1;numOfRow< boardLimits.size(); numOfRow++){
             for (int numberOfColumn = 1; numberOfColumn<=boardLimits.get(numOfRow);numberOfColumn++){
                 Location temp = new Location(numOfRow,numberOfColumn);
                 cornerHashMap.put(temp, new Corner(temp));

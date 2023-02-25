@@ -23,8 +23,8 @@ public class Player {
     private int playerId;
     private int numOfWinPoints;
     private int[] resources;
-    private ArrayList<Corner> settlements;
-    private ArrayList<Path> paths;
+    private final ArrayList<Corner> settlements;
+    private final ArrayList<Path> paths;
 
     public Player(int playerId) {
         this.playerId = playerId;

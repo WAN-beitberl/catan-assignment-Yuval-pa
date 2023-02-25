@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * The constructor of players and the holder of the instances
  */
 public class PlayerManager {
-    private static ArrayList<Player> players = new ArrayList<>();
+    private static final ArrayList<Player> players = new ArrayList<>();
     private static int maxNumberOfPlayers = 2;
     private static int currentNumberOfPlayers= 0;
 

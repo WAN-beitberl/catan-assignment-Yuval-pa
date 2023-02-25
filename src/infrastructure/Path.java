@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class Path{
-    private static ArrayList<Path> paths =new ArrayList<>();
+    private static final ArrayList<Path> paths =new ArrayList<>();
 
     /**
      * get the instance of a path

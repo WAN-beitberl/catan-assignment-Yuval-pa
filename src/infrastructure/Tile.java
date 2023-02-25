@@ -1,36 +1,7 @@
 package infrastructure;
 
 
-import java.io.IOException;
-import java.util.HashMap;
-
 public class Tile {
-    private static final HashMap<Location, Tile> locationTileHashMap = new HashMap<>();
-
-    /**
-     * get the tile with the given base location
-     * @param baseLocation the base location to search
-     * @return the instance of the tile with the given base location, if there is no such tile returns null
-     */
-    public static Tile getInstanceOfLocation(Location baseLocation){
-      return locationTileHashMap.get(baseLocation);
-    }
-
-    /**
-     * <b>This method is for testing only!!!</b>
-     * @return a copy of {@link Tile#locationTileHashMap}
-     */
-    static HashMap<Location, Tile> getLocationTileHashMapForTest(){
-        return new HashMap<>(locationTileHashMap);
-    }
-
-    /**
-     * <b>This method is for testing only!!!</b>
-     */
-    static void setLocationTileHashMapForTest(HashMap<Location,Tile> map){
-        locationTileHashMap.clear();
-        locationTileHashMap.putAll(map);
-    }
 
     /**
      * The number of the tile
@@ -59,10 +30,8 @@ public class Tile {
      * if used {@link Tile#setType(int)} and {@link Tile#setNumber(int)} must be called later.
      * </p>
      * @param baseLocation the location of the lowest corner of the tile.
-     * @throws java.io.IOException if another tile already has the given base location
      */
-    public  Tile(Location baseLocation) throws IOException {
-        addToHashMap(baseLocation);
+    public  Tile(Location baseLocation)  {
         this.baseLocation = baseLocation;
         this.type = -1;
         this.number = 0;
@@ -70,21 +39,14 @@ public class Tile {
         this.corners = new Corner[6];
     }
 
-    private void addToHashMap(Location baseLocation) throws IOException{
-        if (locationTileHashMap.get(baseLocation) != null){
-            throw new IOException("This base location already exists");
-        }
-        locationTileHashMap.put(baseLocation, this);
-    }
 
     /**
      * The same as {@link Tile#Tile(Location)} but without the need to set the number ond type of the tile afterwards
      * @param baseLocation the location of the lowest corner of the tile.
      * @param type The type of resource associated with this tile.
      * @param number The dice value associated with this tile.
-     * @throws IOException if there is a tile instance with the given base location
      */
-    public Tile(Location baseLocation, int type, int number) throws IOException {
+    public Tile(Location baseLocation, int type, int number) {
         this(baseLocation);
         setType(type);
         setNumber(number);
@@ -101,6 +63,7 @@ public class Tile {
     public int getType(){
         return this.type;
     }
+    public Location getLocation(){return baseLocation;}
 
     /**
      * add a new corner to the array of this tile, is called by todo: add link to method in Corner
@@ -153,5 +116,20 @@ public class Tile {
         for (Corner corner : this.corners){
            corner.produce(this.type);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tile tile = (Tile) o;
+
+        return baseLocation.equals(tile.baseLocation);
+    }
+
+    @Override
+    public int hashCode() {
+        return baseLocation.hashCode();
     }
 }

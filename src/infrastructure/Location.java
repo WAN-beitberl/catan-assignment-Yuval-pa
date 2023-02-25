@@ -7,8 +7,8 @@ public class Location {
 
 /**
  * A class that is used by every item to and stores its location on the map
- * @param xCor the x-axis.
- * @param yCor the y-axis.
+ * @param xCor the row number in the board.
+ * @param yCor the column number in the board.
  */
     public Location(int xCor, int yCor){
         this.xCor= xCor;
@@ -22,12 +22,22 @@ public class Location {
         return yCor;
     }
 
-    /**
-     * checks if two locations are the same
-     * @param location the location to be tested
-     * @return true if they are the same, else false.
-     */
-    public boolean equals(Location location){
-        return this.xCor == location.get_xCor() && this.yCor == location.get_yCor();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+
+        if (xCor != location.xCor) return false;
+        return yCor == location.yCor;
     }
+
+    @Override
+    public int hashCode() {
+        int result = xCor;
+        result = 31 * result + yCor;
+        return result;
+    }
+
 }
