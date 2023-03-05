@@ -1,5 +1,7 @@
 package infrastructure;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 /**
@@ -66,5 +68,8 @@ public class TileManager {
 
 	public static boolean checkIfTileExist(Location location){
 		return allTiles.containsKey(location);
+	}
+	public static Location @NotNull [] getLocations(){
+		return allTiles.keySet().toArray(new Location[0]);
 	}
 }

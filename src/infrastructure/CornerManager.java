@@ -44,9 +44,7 @@ public class CornerManager {
     public static boolean checkIfLocationIsLegal(Location location){
         if(location.get_xCor()<1 || location.get_xCor()> boardLimits.size() || location.get_yCor()<1)
             return false;
-        if (location.get_yCor()>boardLimits.get(location.get_xCor()))
-            return false;
-        return true;
+        return location.get_yCor() <= boardLimits.get(location.get_xCor());
     }
 
     /**

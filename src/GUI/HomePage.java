@@ -7,27 +7,22 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class HomePage extends JFrame implements ActionListener {
+public class HomePage extends Page {
 	private JButton start;
 	private JButton load;
 	private JButton options;
+	private JPanel master;
 
 	public HomePage(){
-		setupWindow();
+		super();
 		addTitle();
 		makeButtons();
+		ImageIcon icon = new ImageIcon("resources/catan background.jpg");
+
+		//this.setBackground(new ImageIcon("resources/catan background.jpg"));
 		this.pack();
 	}
 
-	private void setupWindow(){
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setMinimumSize(new Dimension(1280,720));
-		this.setMaximumSize(new Dimension(1280,720));
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.setVisible(true);
-		this.setTitle("Catan Game");
-		this.setResizable(true);
-	}
 
 	private void addTitle(){
 		JPanel panel = new JPanel();
@@ -49,9 +44,9 @@ public class HomePage extends JFrame implements ActionListener {
 
 	private void makeButtons(){
 		JPanel panel = new JPanel();
-		start = new JButton("start game");
-		load = new JButton("load game");
-		options = new JButton("options");
+		start = new JButton("Start Game");
+		load = new JButton("Load Game");
+		options = new JButton("Options");
 		var lay = new FlowLayout(FlowLayout.CENTER,60,100);
 		panel.setLayout(lay);
 
@@ -81,21 +76,13 @@ public class HomePage extends JFrame implements ActionListener {
 		this.add(panel,BorderLayout.CENTER);
 	}
 
-	private Font coolFont(){
-		Font font;
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new File("resources\\Sherlock Press.ttf"));
-			ge.registerFont(font);
-		} catch (FontFormatException | IOException e) {
-			throw new RuntimeException(e);
-		}
-		return font;
-	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == start){
-
+			// todo get names and colors form users
+			this.setVisible(false);
+			new GameWindow();
+			dispose();
 		}
 
 		if(e.getSource() == load){
